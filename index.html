@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Mortgage repayment calculator</title>
+  <style>
+    *{
+      @import url(https://fonts.google.com/specimen/Plus+Jakarta+Sans);
+      font-family: 'Plus Jakarta Sans','sans-serif';
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      outline: none;
+      text-decoration: none;
+      /* border: none; */
+    }
+    i{
+      color: hsl(202, 55%, 16%);
+      font-weight: 700;
+    }
+    html body{
+      background-color: #e3f4fc;
+      width: 100%;
+      /* max-width: 1440px; */
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 100px;
+    }
+    .container{
+      width: 70%;
+      height: 70%;
+      display: flex;
+      background-color: #ffffff;
+      border-radius: 20px 0 0 20px;
+      border-radius: 0 20px 20px 50px;
+    }
+    .mortgageCalculator{
+      position: relative;
+      width: 50%;
+      height: 100%;
+      background-color: hsl(0, 0%, 100%);
+      padding: 40px 20px;
+      border-radius: 20px 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    h2{
+      font-size: 26px;
+      display: inline;
+      color: hsl(202, 55%, 16%);
+    }
+    .mortgageCalculator>span{
+      position: absolute;
+      right: 20px;
+      top: 46px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: underline;
+      color: hsl(200, 24%, 40%);
+      text-decoration-color: hsl(203, 41%, 72%);
+      cursor: pointer;
+    }
+    .mortageamount{
+      width: 100%;
+      color: hsl(200, 26%, 54%);
+    }
+    .mortageamount .inputfieldMa{
+      display: flex;
+      height: 45px;
+      margin-top: 10px;
+    }
+    .mortageamount .inputfieldMa .inputLogo{
+      width: 8%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px 0 0 5px;
+      background-color: hsl(61, 70%, 52%);
+    }
+    .mortageamount .inputfieldMa>input{
+      border: none;
+      flex: 1;
+      border-radius: 0 5px 5px 0;
+      padding-left: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      border: 2px solid hsl(61, 70%, 52%);
+      color: hsl(202, 55%, 16%);
+    }
+    .term-rate{
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      color: hsl(200, 26%, 54%);
+    }
+    .term-rate .MT{
+      width: 50%;
+    }
+    .term-rate .MT .box{
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+    }
+    .term-rate .MT .box input, .term-rate .IR .box input{
+      height: 45px;
+      border-radius: 5px 0 0 5px;
+      padding-left: 20px;
+      width: 70%;
+      font-weight: 700;
+      font-size: 16px;
+      border-left: 1px solid hsl(202, 55%, 16%);
+      border-top: 1px solid hsl(202, 55%, 16%);
+      border-bottom: 1px solid hsl(202, 55%, 16%);
+      border-right: none;
+    }
+    .term-rate .MT .box .years, .term-rate .IR .box .percent{
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      width: 30%;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 5px 5px 0;
+      color: hsl(202, 55%, 16%);
+      background-color: hsl(202, 86%, 94%);
+      border-top: 1px solid hsl(202, 55%, 16%);
+      border-right: 1px solid hsl(202, 55%, 16%);
+      border-bottom: 1px solid hsl(202, 55%, 16%);
+      border-left: none;
+    }
+    .term-rate .IR{
+      width: 50%;
+      color: hsl(200, 26%, 54%);
+    }
+    .term-rate .IR .box{
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+    }
+    .bottom-box{
+      color: hsl(200, 26%, 54%);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bottom-box label{
+      width: 100%;
+      height: 45px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid hsl(61, 70%, 52%);
+      color: hsl(202, 55%, 16%);
+      font-weight: 700;
+    }
+    .bottom-box label:hover{
+      background-color: hsl(61, 100%, 77%);
+    }
+    button{
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 45px;
+      text-align: center;
+      gap: 10px;
+      background-color: hsl(61, 70%, 52%);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    
+
+    .resultS, .resultShown{
+      width: 50%;
+      background-color: hsl(202, 55%, 16%);
+      padding: 40px 40px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 20px 20px 50px;
+    }
+    .resultS img{
+      padding-top: 60px;
+    }
+    .resultS h3, .resultShown h3{
+      font-size: 20px;
+      color: #ffffff;
+    }
+    .resultS p{
+      font-size: 20px;
+      color: hsl(203, 41%, 72%);
+      text-align: center;
+    }
+
+    .resultShown{
+      justify-content: flex-start;
+      align-items: start;
+    }
+    .resultShown p{
+      padding-top: 20px;
+      font-size: 14px;
+      color: hsl(203, 41%, 72%);
+    }
+    .resultColumn{
+      border-radius: 10px;
+      border-top: 5px solid hsl(61, 70%, 52%);
+    }
+    
+    .resultShown .resultColumn{
+      width: 100%;
+      height: 60%;
+      background-color: #102434;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+    }
+    .resultShown .resultColumn span{
+      color: hsl(203, 41%, 72%);
+      font-size: 16px;
+    }
+    .resultShown .resultColumn #result1{
+      color: hsl(61, 70%, 52%);
+      font-size: 36px;
+      padding-top: 20px;
+    }
+    hr{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .resultShown .resultColumn #result2{
+      color: #ffffff;
+      font-size: 24px;
+    }
+
+    /*media queries*/
+
+    @media (max-width: 1070px){
+      h2{
+        font-size: 20px;
+      }
+      .mortgageCalculator>span{
+        top: 45px;
+        font-size: 12px;
+      }
+      .resultShown .resultColumn #result1{
+        font-size: 26px;
+      }
+      .resultShown .resultColumn #result2{
+        font-size: 14px;
+      }
+      .resultShown .resultColumn span{
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 970px){
+      html body{
+        padding-top: 0;
+      }
+      .container{
+        width: 80%;
+        height: 100vh;
+        border-radius: 0;
+        flex-direction: column;
+      }
+      .mortgageCalculator{
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+      .resultS, .resultShown{
+        width: 100%;
+        border-radius: 50px 0 50px 0;
+      }
+      button{
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 470px){
+      .container{
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        flex-direction: column;
+      }
+      .mortgageCalculator{
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+      .resultS, .resultShown{
+        width: 100%;
+        border-radius: 50px 0 50px 0;
+      }
+      button{
+        width: 100%;
+      }
+    }
+
+
+
+    .attribution { font-size: 11px; text-align: center; padding-top: 20px; color: #ffffff;}
+    .attribution a { color: hsl(0, 0%, 100%); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="mortgageCalculator">
+      <h2>Mortgage Calculator</h2>
+
+      <span id="clearAll">Clear All</span>
+
+      <div class="mortageamount">
+        <span>Mortgage Amount</span>
+        <div class="inputfieldMa">
+          <div class="inputLogo"><i class="fa-solid fa-dollar-sign"></i></div>
+          <input type="text" id="MA" required>
+        </div>
+      </div>
+
+      <div class="term-rate">
+        <div class="MT">
+
+          <span>Mortgage Term</span>
+
+          <div class="box">
+            <input type="text" id="year" required>
+            <div class="years"><span>years</span></div>
+          </div>
+
+        </div>
+
+        <div class="IR">
+
+          <span>Interest Rate</span>
+
+          <div class="box">
+            <input type="text" id="interestR" required>
+            <div class="percent"><i class="fa-solid fa-percent"></i></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="bottom-box">
+        <span>Mortgage Type</span>
+        <label>
+          <input type="radio" value="Repayment" id="repayment">
+          <span>Repayment</span>
+        </label>
+        <label>
+          <input type="radio" value="Interset-Only" id="interestOnly">
+          <span>Interest Only</span>
+        </label>
+        <button id="button"><img src="./assets/images/icon-calculator.svg" alt="icon-calculator">Calculate Repayments</button>
+      </div>
+    </div>
+
+    <div class="resultS" id="rr1">
+      <img src="./assets/images/illustration-empty.svg" alt="image">
+      <h3>Results shown here</h3>
+      <p>Complete the form and click “calculate repayments” to see what 
+        your monthly repayments would be.</p>
+      <div class="attribution">
+        Coded by <a href="#">Abhishek Jha</a>.
+      </div>
+    </div>
+
+    <div class="resultShown" style="display: none;" id="rr2">
+      <h3>Your results</h3>
+      <p>Your results are shown below based on the information you provided. 
+        To adjust the results, edit the form and click “calculate repayments” again.</p>
+      <div class="resultColumn">
+        <span>Your monthly repayments</span>
+        <strong id="result1"></strong>
+        <hr>
+        <span style="padding-top: 10px; padding-bottom: 10px;">Total you'll repay over the term</span>
+        <strong id="result2"></strong>
+      </div>
+    </div>
+
+  </div>
+  
+
+  <script src="./script.js"></script>
+  
+</body>
+</html>
